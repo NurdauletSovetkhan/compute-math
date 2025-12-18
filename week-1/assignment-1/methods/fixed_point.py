@@ -1,5 +1,9 @@
 import numpy as np
 
+# Original equation f(x)=0 is rewritten as x = g(x)
+# Iteration process: x_{n+1} = g(x_n)
+# Method converges if |g'(x)| < 1 near the root
+
 def fixed_point(g, x0, eps, max_iter):
     table = []
     x = x0

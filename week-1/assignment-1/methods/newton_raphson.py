@@ -1,5 +1,9 @@
 import numpy as np
 
+# Based on tangent line approximation of the function
+# Iteration formula:
+# x_{n+1} = x_n - f(x_n) / f'(x_n)
+
 def newton(func, dfunc, x0, epsilon=1e-6, max_iterations=1000):
     """
     Newton-Raphson Method

@@ -1,5 +1,9 @@
 import numpy as np
 
+# Similar to bisection method, but instead of midpoint we take the intersection of chord with x-axis
+# using the formula x = b - f(b)*(b - a)/(f(b) - f(a))
+
+
 def false_point(func, a, b, epsilon=1e-6, max_iterations=1000):
     fa = func(a)
     fb = func(b)
