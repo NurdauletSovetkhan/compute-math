@@ -8,10 +8,17 @@ from methods.secant import secant
 from methods.false_point import false_point
 import math
 
+# func  = lambda x: x**3 - x - 2
+# dfunc = lambda x: 3*x**2 - 1
+# gx    = lambda x: (x + 2)**(1/3)
 
 func = lambda x: math.exp(x) - x**2
 gx = lambda x: -math.exp(x/2)  # -e^(x/2) -> e^x = x^2 => x = -sqrt(e^x) = -e^(x/2) 
 dfunc = lambda x: math.exp(x) - 2*x
+
+# func  = lambda x: math.cos(x) - x
+# dfunc = lambda x: -math.sin(x) - 1
+# gx    = lambda x: math.cos(x)
 
 a, b = -2, 0.0     # Now f(a) and f(b) have different signs
 

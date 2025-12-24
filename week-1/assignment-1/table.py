@@ -1,7 +1,5 @@
 from tabulate import tabulate
 
-
-
 def print_table(b_table, fp_table, newton_table, secant_table, false_table, max_len):
     rows = []
     for i in range(max_len):

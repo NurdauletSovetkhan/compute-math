@@ -1,7 +1,9 @@
 import numpy as np
+
 # Derivative is replaced by finite difference
 # Uses two previous points:
 # x_{n+1} = x_n - f(x_n)*(x_n - x_{n-1}) / (f(x_n) - f(x_{n-1}))
+
 def secant(func, x0, x1, epsilon=1e-6, max_iterations=1000):
     table = []
 
