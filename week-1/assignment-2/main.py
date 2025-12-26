@@ -3,7 +3,8 @@ from tabulate import tabulate
 from gaussian_elimination import solve as gaussian_solve
 from gauss_seidel import solve as gauss_seidel_solve
 from test_systems import get_systems
-
+from determinant import get_determinant
+from inverse_matrix import get_inverse_matrix, print_inverse_matrix
 
 def print_system(A, b, description):
     print(f"\n{description}")
@@ -16,7 +17,7 @@ def print_system(A, b, description):
 def print_direct_solution(x_true):
     print("\nDIRECT METHOD (Gaussian Elimination) - TRUE VALUE")
     for i, val in enumerate(x_true):
-        print(f"x{i+1} = {val:.10f}")
+        print(f"x{i+1} = {val:.4f}")
 
 
 def print_iteration_table(iterations_data, x_true):
@@ -44,17 +45,30 @@ def print_iteration_table(iterations_data, x_true):
         # Build row
         row = [iter_num]
         for val in x:
-            row.append(f"{val:.8f}")
+            row.append(f"{val:.2f}")
         
         if error is not None:
-            row.append(f"{error:.4e}")
+            row.append(f"{error:.4f}")
         else:
             row.append("N/A")
         
-        row.append(f"{true_error:.4e}")
+        row.append(f"{true_error:.4f}")
         table_data.append(row)
     
     print(tabulate(table_data, headers=headers, tablefmt="grid"))
+
+def print_determinant(matrix):
+    """Calculate and print the determinant of the matrix"""
+    det = get_determinant(matrix.tolist())
+    print(f"\nDeterminant of the coefficient matrix: {det:.4f}")
+    
+    # Also print inverse matrix
+    try:
+        inverse = get_inverse_matrix(matrix)
+        print("\nInverse Matrix A^-1:")
+        print(inverse)
+    except ValueError as e:
+        print(f"\nInverse matrix cannot be calculated: {e}")
 
 
 def compare_solutions(x_direct, x_iterative, converged):
@@ -69,20 +83,21 @@ def compare_solutions(x_direct, x_iterative, converged):
         max_error = max(max_error, error)
         table_data.append([
             f"x{i+1}",
-            f"{x_direct[i]:.10f}",
-            f"{x_iterative[i]:.10f}",
-            f"{error:.4e}"
+            f"{x_direct[i]:.4f}",
+            f"{x_iterative[i]:.4f}",
+            f"{error:.4f}"
         ])
     
     headers = ["Variable", "Direct", "Iterative", "Absolute Error"]
     print(tabulate(table_data, headers=headers, tablefmt="grid"))
-    print(f"Maximum Absolute Error: {max_error:.4e}")
+    print(f"Maximum Absolute Error: {max_error:.4f}")
     print(f"Convergence Status: {'CONVERGED' if converged else 'NOT CONVERGED'}")
 
 
 def solve_system(A, b, description, max_iter=50, tol=1e-6):
     """Solve a system using both direct and iterative methods"""
     print_system(A, b, description)
+    print_determinant(A)
     
     # Solve with direct method (Gaussian Elimination)
     try:
@@ -158,6 +173,7 @@ def main():
             systems = get_systems()
             for A, b, description in systems:
                 solve_system(A, b, description)
+            print_determinant(systems[0][0])  # Example of determinant calculation
             print("\nALL SYSTEMS SOLVED")
         
         elif choice == '2':

@@ -10,6 +10,8 @@ def gauss_seidel(A, b, x0=None, max_iter=100, tol=1e-6):
     
     iterations_data = []
     
+    # Formula is:
+    # x[i] = (b[i] - (a[i,j] * x[j] + a[i,j+1] * x[j+1])) / A[i,i]
     # Store initial guess
     iterations_data.append({
         'iteration': 0,
