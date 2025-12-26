@@ -2,16 +2,6 @@ import numpy as np
 
 
 def gaussian_elimination(A, b):
-    """
-    Solve system of linear equations Ax = b using Gaussian Elimination with partial pivoting.
-    
-    Parameters:
-    A: coefficient matrix (n x n)
-    b: constant vector (n x 1)
-    
-    Returns:
-    x: solution vector
-    """
     n = len(b)
     # Create augmented matrix
     Ab = np.hstack([A.astype(float), b.reshape(-1, 1).astype(float)])
@@ -41,5 +31,4 @@ def gaussian_elimination(A, b):
 
 
 def solve(A, b):
-    """Wrapper function for Gaussian Elimination"""
     return gaussian_elimination(A, b)

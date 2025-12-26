@@ -2,21 +2,6 @@ import numpy as np
 
 
 def gauss_seidel(A, b, x0=None, max_iter=100, tol=1e-6):
-    """
-    Solve system of linear equations Ax = b using Gauss-Seidel iterative method.
-    
-    Parameters:
-    A: coefficient matrix (n x n)
-    b: constant vector (n x 1)
-    x0: initial guess (if None, starts with zeros)
-    max_iter: maximum number of iterations
-    tol: convergence tolerance
-    
-    Returns:
-    x: solution vector
-    iterations_data: list of dictionaries with iteration data for table display
-    converged: boolean indicating if method converged
-    """
     n = len(b)
     if x0 is None:
         x = np.zeros(n)
@@ -65,5 +50,4 @@ def gauss_seidel(A, b, x0=None, max_iter=100, tol=1e-6):
 
 
 def solve(A, b, x0=None, max_iter=100, tol=1e-6):
-    """Wrapper function for Gauss-Seidel method"""
     return gauss_seidel(A, b, x0, max_iter, tol)
