@@ -1,8 +1,11 @@
 import numpy as np
 
-# Similar to bisection method, but instead of midpoint we take the intersection of chord with x-axis
-# using the formula x = b - f(b)*(b - a)/(f(b) - f(a))
-
+# False Position Method (Regula Falsi)
+# This one is like the bisection method but a bit smarter.
+# Instead of just picking the midpoint, we draw a straight line (chord) between (a, f(a)) and (b, f(b)),
+# and find where this line crosses the x-axis. That crossing point becomes our new guess.
+# Formula: c = b - f(b)*(b - a)/(f(b) - f(a))
+# It usually converges faster than bisection, but can be slow if the function is curved weirdly.
 
 def false_point(func, a, b, epsilon=1e-6, max_iterations=1000):
     fa = func(a)

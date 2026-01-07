@@ -1,5 +1,12 @@
 import numpy as np
 
+# Gauss-Seidel Iterative Method
+# This is an iterative way to solve Ax = b, great for large sparse systems.
+# The cool thing is that as soon as we compute a new value for x[i], we use it right away
+# for calculating the next variables (unlike Jacobi which waits for the full iteration).
+# This usually makes it converge faster.
+# Formula: x[i] = (b[i] - sum of known terms) / A[i,i]
+# Works best when the matrix is diagonally dominant.
 
 def gauss_seidel(A, b, x0=None, max_iter=100, tol=1e-6):
     n = len(b)

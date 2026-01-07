@@ -1,8 +1,11 @@
 import numpy as np
 
-# Based on tangent line approximation of the function
-# Iteration formula:
-# x_{n+1} = x_n - f(x_n) / f'(x_n)
+# Newton-Raphson Method
+# This is one of the fastest root-finding methods out there.
+# The idea is to draw a tangent line at your current guess and see where it hits the x-axis.
+# That intersection becomes your next guess. Formula: x_new = x_old - f(x_old) / f'(x_old)
+# It converges really fast (quadratically) when you start close to the root.
+# Downside: you need to know the derivative, and it can fail if f'(x) is zero or you start too far.
 
 def newton(func, dfunc, x0, epsilon=1e-6, max_iterations=1000):
     """

@@ -1,5 +1,11 @@
 import numpy as np
 
+# Gaussian Elimination with Partial Pivoting
+# This is the classic direct method for solving Ax = b.
+# We transform the matrix into upper triangular form by eliminating elements below the diagonal.
+# Partial pivoting means we swap rows to put the largest element on the diagonal - this keeps things stable.
+# Once we have the triangular form, we use back substitution to find the solution.
+# Its reliable and works for most systems, but can be slow for very large matrices.
 
 def gaussian_elimination(A, b):
     n = len(b)

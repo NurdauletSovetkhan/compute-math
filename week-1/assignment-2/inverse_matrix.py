@@ -1,6 +1,12 @@
 import numpy as np
 from determinant import get_determinant
 
+# Matrix Inverse using Gauss-Jordan Elimination
+# To find the inverse, we augment our matrix A with the identity matrix [A | I].
+# Then we apply row operations to transform A into the identity matrix.
+# Whatever happens to I becomes our inverse: [I | A^(-1)].
+# We use partial pivoting to avoid numerical issues.
+# Note: the matrix must be square and non-singular (determinant not zero) to have an inverse.
 
 def get_inverse_matrix(matrix):
     if isinstance(matrix, list):

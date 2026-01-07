@@ -1,8 +1,11 @@
 import numpy as np
 
-# Derivative is replaced by finite difference
-# Uses two previous points:
-# x_{n+1} = x_n - f(x_n)*(x_n - x_{n-1}) / (f(x_n) - f(x_{n-1}))
+# Secant Method
+# Think of this as Newton-Raphson but without needing the actual derivative.
+# Instead of the true derivative, we approximate it using the slope between two previous points.
+# Formula: x_new = x1 - f(x1) * (x1 - x0) / (f(x1) - f(x0))
+# Its almost as fast as Newton and you dont need to compute derivatives, which is nice.
+# You do need two starting points though, not just one.
 
 def secant(func, x0, x1, epsilon=1e-6, max_iterations=1000):
     table = []

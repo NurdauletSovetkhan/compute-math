@@ -1,8 +1,10 @@
 import numpy as np
 
-# Original equation f(x)=0 is rewritten as x = g(x)
-# Iteration process: x_{n+1} = g(x_n)
-# Method converges if |g'(x)| < 1 near the root
+# Fixed Point Iteration Method
+# The trick here is to rewrite f(x) = 0 into the form x = g(x).
+# Then we just keep plugging our guess back in: x_new = g(x_old), and repeat until it stabilizes.
+# The catch is that it only works if |g'(x)| < 1 near the root, otherwise it blows up.
+# When it works though, its pretty elegant and easy to implement.
 
 def fixed_point(g, x0, eps, max_iter):
     table = []

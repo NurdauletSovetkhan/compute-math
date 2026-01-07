@@ -1,5 +1,10 @@
 import numpy as np
 
+# Bisection Method
+# The idea is pretty simple: if f(a) and f(b) have opposite signs, there must be a root somewhere between them.
+# We just keep cutting the interval in half, checking which half contains the root, and repeat.
+# Its slow but super reliable - it always converges if there is a root in [a, b].
+
 def bisection(func, a, b, epsilon, max_iterations):
     if func(a) * func(b) > 0:
         print("No root in the interval")

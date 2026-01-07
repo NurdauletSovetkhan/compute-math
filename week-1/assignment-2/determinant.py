@@ -1,3 +1,10 @@
+# Determinant Calculation using Cofactor Expansion (Laplace Expansion)
+# The determinant tells us if a matrix is invertible and has geometric meaning (scaling factor).
+# For small matrices (1x1, 2x2) we use direct formulas.
+# For larger ones, we expand along the first row: pick each element, multiply by its cofactor,
+# and recursively calculate the determinant of the smaller matrix (minor).
+# Sign alternates: + - + - ... based on position.
+
 def get_determinant(matrix):
     # Base case for 1x1 and 2x2 matrices
     if len(matrix) == 1:
