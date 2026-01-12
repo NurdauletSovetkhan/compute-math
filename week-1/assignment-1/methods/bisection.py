@@ -27,7 +27,7 @@ def bisection(func, a, b, epsilon, max_iterations):
     return table
 
 if __name__ == "__main__":
-    func = lambda x: np.tan(x) - x**2
+    func = lambda x: x**3 - 2*x**2 + x - 3
     epsilon = 1e-3
     a = float(input("a: "))
     b = float(input("b: "))
