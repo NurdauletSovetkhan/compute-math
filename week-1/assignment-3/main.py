@@ -11,9 +11,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from methods import StraightLine, Quadratic, Cubic, Exponential, Logarithmic, Power
 from table import display_results_table, display_data_table
-from graph import plot_all_models
+from graph import plot_best_model, plot_all_models
 from examples import get_all_examples, get_example
-
 
 # All available models
 ALL_MODELS = [
@@ -28,7 +27,37 @@ ALL_MODELS = [
 
 def parse_input(input_str: str) -> list:
     """Parse space-separated numbers from input string."""
-    return [float(x) for x in input_str.strip().split()]
+    try:
+        values = [float(x) for x in input_str.strip().split()]
+        return values
+    except ValueError as e:
+        raise ValueError(f"Invalid number format: {e}")
+
+
+def validate_data(x_data: list, y_data: list) -> tuple:
+    """Validate input data for curve fitting.
+    
+    Returns:
+        tuple: (is_valid, error_message)
+    """
+    # Check if both lists have data
+    if not x_data or not y_data:
+        return False, "Error: Data arrays cannot be empty!"
+    
+    # Check if lengths match
+    if len(x_data) != len(y_data):
+        return False, f"Error: Number of x values ({len(x_data)}) must match number of y values ({len(y_data)})!"
+    
+    # Check minimum data points
+    if len(x_data) < 2:
+        return False, "Error: At least 2 data points are required!"
+    
+    # Check for unique x values
+    if len(x_data) != len(set(x_data)):
+        duplicates = [x for x in set(x_data) if x_data.count(x) > 1]
+        return False, f"Error: x values must be unique! Duplicate values found: {duplicates}"
+    
+    return True, ""
 
 
 def get_models_by_indices(indices: list) -> list:
@@ -84,12 +113,10 @@ def run_with_data(x_data: list, y_data: list, models: list = None, show_graph: b
     Run curve fitting with given data.
     If models is None, use all models.
     """
-    if len(x_data) != len(y_data):
-        print("Error: x and y must have the same number of elements!")
-        return
-    
-    if len(x_data) < 2:
-        print("Error: At least 2 data points are required!")
+    # Validate data
+    is_valid, error_msg = validate_data(x_data, y_data)
+    if not is_valid:
+        print(error_msg)
         return
     
     # Display input data
@@ -104,24 +131,36 @@ def run_with_data(x_data: list, y_data: list, models: list = None, show_graph: b
     # Display results table
     display_results_table(results)
     
-    # Show graph
+    # Find and show best model
     if show_graph and fitted_models:
-        plot_all_models(x_data, y_data, fitted_models)
+        # Find best model (minimum SSE)
+        best_result = min(results, key=lambda r: r['sse'])
+        best_idx = results.index(best_result)
+        best_model = fitted_models[best_idx]
+        plot_best_model(x_data, y_data, best_model, 
+                       title=f"Best Fit: {best_model.name} (SSE = {best_result['sse']:.4f})")
+        # plot_all_models(x_data, y_data, fitted_models, 
+        #                 title="Curve Fitting Models Comparison")
 
 
 def interactive_input():
     """
     Get data from user input.
     """
-    print("\nEnter x values (space-separated):")
-    x_str = input("> ")
-    x_data = parse_input(x_str)
-    
-    print("Enter y values (space-separated):")
-    y_str = input("> ")
-    y_data = parse_input(y_str)
-    
-    return x_data, y_data
+    try:
+        print("\nEnter x values (space-separated):")
+        x_str = input("> ")
+        x_data = parse_input(x_str)
+        
+        print("Enter y values (space-separated):")
+        y_str = input("> ")
+        y_data = parse_input(y_str)
+        
+        return x_data, y_data
+    except ValueError as e:
+        raise ValueError(f"Input parsing error: {e}")
+    except Exception as e:
+        raise Exception(f"Unexpected error during input: {e}")
 
 
 def select_models_menu():

@@ -18,7 +18,7 @@ def plot_all_models(x_data: list, y_data: list, models: list, title: str = "Curv
     plt.figure(figsize=(12, 8))
     
     # Plot original data points
-    plt.scatter(x_data, y_data, color='black', s=100, zorder=5, label='Data points', marker='o')
+    plt.scatter(x_data, y_data, color='black', s=50, zorder=5, label='Data points', marker='o')
     
     # Generate smooth x values for plotting curves
     x_min, x_max = min(x_data), max(x_data)

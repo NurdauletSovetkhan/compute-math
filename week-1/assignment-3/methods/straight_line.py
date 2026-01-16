@@ -29,6 +29,7 @@ class StraightLine:
         Σy = a·Σx + b·n
         Σxy = a·Σx² + b·Σx
         """
+        
         n = len(x_data)
         
         sum_x = sum(x_data)
