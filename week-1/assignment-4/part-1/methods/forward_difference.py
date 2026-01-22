@@ -1,23 +1,4 @@
 def forward_difference_table(x_values: list, y_values: list, max_order: int = None):
-    """
-    Parameters:
-    -----------
-    x_values : list
-        List of x values
-    y_values : list
-        List of f(x) values
-    max_order : int, optional
-        Maximum order of differences to calculate.
-        If None, calculates until differences become zero or n-1 order.
-    
-    Returns:
-    --------
-    dict with keys:
-        'x': x values
-        'y': y values (f(x))
-        'differences': list of lists, where differences[i] contains i-th order differences
-        'order': maximum order calculated
-    """
     n = len(x_values)
     if n != len(y_values):
         raise ValueError("x_values and y_values must have the same length")
@@ -34,7 +15,6 @@ def forward_difference_table(x_values: list, y_values: list, max_order: int = No
     # Initialize table
     # differences[0] is the 1st order difference (Δf)
     # differences[1] is the 2nd order difference (Δ²f)
-    # etc.
     differences = []
     
     # Calculate each order of differences

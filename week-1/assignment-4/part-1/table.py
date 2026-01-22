@@ -1,23 +1,8 @@
-"""
-Table display for finite differences.
-"""
-
 from tabulate import tabulate
 from utils import format_difference_symbol, create_difference_headers, detect_polynomial_degree
 
 
 def display_forward_difference_table(result: dict, precision: int = 4):
-    """
-    Display forward difference table.
-    
-    Parameters:
-    -----------
-    result : dict
-        Result from forward_difference_table function with keys:
-        'x', 'y', 'differences', 'order'
-    precision : int
-        Number of decimal places
-    """
     x_values = result['x']
     y_values = result['y']
     differences = result['differences']
@@ -75,17 +60,6 @@ def display_forward_difference_table(result: dict, precision: int = 4):
 
 
 def display_backward_difference_table(result: dict, precision: int = 4):
-    """
-    Display backward difference table.
-    
-    Parameters:
-    -----------
-    result : dict
-        Result from backward_difference_table function with keys:
-        'x', 'y', 'differences', 'order'
-    precision : int
-        Number of decimal places
-    """
     x_values = result['x']
     y_values = result['y']
     differences = result['differences']
@@ -150,18 +124,6 @@ def display_backward_difference_table(result: dict, precision: int = 4):
 
 
 def display_data_table(x_values: list, y_values: list, title: str = "INPUT DATA"):
-    """
-    Display input data as a table.
-    
-    Parameters:
-    -----------
-    x_values : list
-        List of x values
-    y_values : list
-        List of y values
-    title : str
-        Table title
-    """
     headers = ["i", "xᵢ", "f(xᵢ)"]
     table_data = []
     
@@ -176,18 +138,6 @@ def display_data_table(x_values: list, y_values: list, title: str = "INPUT DATA"
 
 
 def display_comparison(forward_result: dict, backward_result: dict, precision: int = 4):
-    """
-    Display side-by-side comparison of forward and backward differences.
-    
-    Parameters:
-    -----------
-    forward_result : dict
-        Result from forward_difference_table
-    backward_result : dict
-        Result from backward_difference_table
-    precision : int
-        Number of decimal places
-    """
     print("\n" + "="*80)
     print("COMPARISON: FORWARD vs BACKWARD DIFFERENCES")
     print("="*80)

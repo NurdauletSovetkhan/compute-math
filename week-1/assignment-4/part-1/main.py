@@ -12,16 +12,14 @@ import examples
 
 
 def print_header():
-    print("\n" + "="*80)
+    print("\n" + "-="*80)
     print(" "*20 + "FINITE DIFFERENCES CALCULATOR")
     print(" "*25 + "Assignment 4 - Part 1")
-    print("="*80)
+    print("-="*80)
 
 
 def print_menu():
-    print("\n" + "-"*80)
     print("SELECT AN OPTION:")
-    print("-"*80)
     print("  1. Forward Differences - Manual Input")
     print("  2. Backward Differences - Manual Input")
     print("  3. Compare Forward & Backward - Manual Input")
@@ -29,20 +27,10 @@ def print_menu():
     print("  5. Example 2: Exponential Function f(x) = 2^x")
     print("  6. Run All Examples")
     print("  0. Exit")
-    print("-"*80)
 
 
 def get_manual_input():
-    """
-    Get manual input from user.
-    
-    Returns:
-    --------
-    tuple : (x_values, y_values)
-    """
-    print("\n" + "="*80)
     print("MANUAL DATA INPUT")
-    print("="*80)
     
     try:
         # Get function formula
@@ -107,7 +95,6 @@ def get_manual_input():
 
 
 def manual_forward_differences():
-    """Manual input for forward differences."""
     x_values, y_values = get_manual_input()
     
     if x_values is None or y_values is None:
@@ -122,7 +109,6 @@ def manual_forward_differences():
 
 
 def manual_backward_differences():
-    """Manual input for backward differences."""
     x_values, y_values = get_manual_input()
     
     if x_values is None or y_values is None:
@@ -137,7 +123,6 @@ def manual_backward_differences():
 
 
 def manual_comparison():
-    """Manual input for comparing forward and backward differences."""
     x_values, y_values = get_manual_input()
     
     if x_values is None or y_values is None:
@@ -155,7 +140,6 @@ def manual_comparison():
 
 
 def main():
-    """Main program loop."""
     print_header()
     
     while True:
@@ -188,9 +172,7 @@ def main():
             
             else:
                 print("\nInvalid choice! Please enter a number from 0 to 6.")
-            
-            if choice != '6' and choice != '0':
-                input("\nPress Enter to continue...")
+
         
         except KeyboardInterrupt:
             print("\n\n" + "="*80)

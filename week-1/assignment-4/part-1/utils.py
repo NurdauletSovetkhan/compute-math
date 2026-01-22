@@ -1,8 +1,3 @@
-"""
-Utility functions for finite differences.
-"""
-
-
 def validate_data(x_values: list, y_values: list):
     """
     Validate input data for difference calculations.
@@ -29,22 +24,6 @@ def validate_data(x_values: list, y_values: list):
 
 
 def check_equal_spacing(x_values: list, tolerance: float = 1e-10) -> tuple:
-    """
-    Check if x values are equally spaced.
-    
-    Parameters:
-    -----------
-    x_values : list
-        List of x values
-    tolerance : float
-        Tolerance for checking equality
-    
-    Returns:
-    --------
-    tuple : (is_equal_spacing, spacing)
-        is_equal_spacing: True if equally spaced, False otherwise
-        spacing: the spacing value (h) if equally spaced, None otherwise
-    """
     if len(x_values) < 2:
         return False, None
     
@@ -59,20 +38,6 @@ def check_equal_spacing(x_values: list, tolerance: float = 1e-10) -> tuple:
 
 
 def format_difference_symbol(order: int, method: str = "forward") -> str:
-    """
-    Format difference symbol with proper notation.
-    
-    Parameters:
-    -----------
-    order : int
-        Order of difference
-    method : str
-        "forward" for Δ or "backward" for ∇
-    
-    Returns:
-    --------
-    str : formatted symbol (e.g., "Δf", "Δ²f", "∇³f")
-    """
     symbol = "Δ" if method == "forward" else "∇"
     
     if order == 0:
@@ -87,20 +52,6 @@ def format_difference_symbol(order: int, method: str = "forward") -> str:
 
 
 def create_difference_headers(max_order: int, method: str = "forward") -> list:
-    """
-    Create headers for difference table.
-    
-    Parameters:
-    -----------
-    max_order : int
-        Maximum order of differences
-    method : str
-        "forward" or "backward"
-    
-    Returns:
-    --------
-    list : list of header strings
-    """
     headers = ["i", "xᵢ", "f(xᵢ)"]
     
     for order in range(1, max_order + 1):
@@ -110,20 +61,6 @@ def create_difference_headers(max_order: int, method: str = "forward") -> list:
 
 
 def detect_polynomial_degree(differences: list, tolerance: float = 1e-8) -> int:
-    """
-    Detect polynomial degree based on when differences become constant/zero.
-    
-    Parameters:
-    -----------
-    differences : list of lists
-        List of difference arrays for each order
-    tolerance : float
-        Tolerance for checking if differences are constant
-    
-    Returns:
-    --------
-    int : detected polynomial degree (or -1 if not a polynomial)
-    """
     for order, diffs in enumerate(differences):
         if not diffs:
             continue
@@ -143,20 +80,6 @@ def detect_polynomial_degree(differences: list, tolerance: float = 1e-8) -> int:
 
 
 def get_function_value(func, x):
-    """
-    Safely evaluate function at point x.
-    
-    Parameters:
-    -----------
-    func : callable or dict
-        Function to evaluate, or dictionary of x->y values
-    x : float
-        Point at which to evaluate
-    
-    Returns:
-    --------
-    float : function value at x
-    """
     if callable(func):
         return func(x)
     elif isinstance(func, dict):
