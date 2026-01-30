@@ -46,18 +46,6 @@ def forward_difference_table(x_values: list, y_values: list, max_order: int = No
 
 
 def calculate_forward_difference(values: list, order: int = 1):
-    """   
-    Parameters:
-    -----------
-    values : list
-        List of values
-    order : int
-        Order of difference to calculate
-    
-    Returns:
-    --------
-    list : differences of specified order
-    """
     if order < 1:
         return values
     

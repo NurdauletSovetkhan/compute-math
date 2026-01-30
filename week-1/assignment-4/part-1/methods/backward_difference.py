@@ -22,6 +22,7 @@ def backward_difference_table(x_values: list, y_values: list, max_order: int = N
     for order in range(max_order):
         next_diff = []
         for i in range(1, len(current_diff)):
+            # Forward difference: Δf(xi) = f(xi+1) - f(xi)
             # Backward difference: ∇f(xi) = f(xi) - f(xi-1)
             diff = current_diff[i] - current_diff[i - 1]
             next_diff.append(diff)

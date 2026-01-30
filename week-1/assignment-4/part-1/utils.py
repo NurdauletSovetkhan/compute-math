@@ -22,7 +22,8 @@ def validate_data(x_values: list, y_values: list):
     if len(x_values) < 2:
         raise ValueError("Need at least 2 data points")
 
-
+# ========================================================
+#                       h
 def check_equal_spacing(x_values: list, tolerance: float = 1e-10) -> tuple:
     if len(x_values) < 2:
         return False, None
