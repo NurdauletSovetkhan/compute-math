@@ -6,7 +6,7 @@ It requires equally spaced x values.
 
 Formula:
 P(x) = y₀ + u*Δy₀ + u(u-1)/2!*Δ²y₀ + u(u-1)(u-2)/3!*Δ³y₀ + ...
-
+P(x) = 
 where u = (x - x₀) / h
 """
 
