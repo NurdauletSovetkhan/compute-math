@@ -127,9 +127,9 @@ def get_newton_forward_coefficients(x_values: list, y_values: list, differences:
         order = i + 1
         factorial *= order
         
-        # Multiply u_poly by (u - i)
-        # u - i = (x - x0)/h - i = (x - x0 - i*h)/h
-        u_poly = multiply_and_shift(u_poly, -order)
+        # Multiply u_poly by (u - (order-1))
+        # u - (order-1) = (x - x0)/h - (order-1) = (x - x0 - (order-1)*h)/h
+        u_poly = multiply_and_shift(u_poly, order - 1)
         
         # Convert from u to x: u = (x - x0) / h
         # So we need to convert polynomial in u to polynomial in x

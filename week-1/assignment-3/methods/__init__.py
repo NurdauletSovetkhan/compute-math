@@ -6,6 +6,7 @@ from .straight_line import StraightLine
 from .quadratic import Quadratic
 from .cubic import Cubic
 from .exponential import Exponential
+from .exponential_abx import ExponentialABx
 from .logarithmic import Logarithmic
 from .power import Power
 
@@ -14,6 +15,7 @@ __all__ = [
     'Quadratic', 
     'Cubic',
     'Exponential',
+    'ExponentialABx',
     'Logarithmic',
     'Power'
 ]
