@@ -53,7 +53,7 @@ def validate_function(func: Callable, test_value: float = 0.0) -> None:
 
 
 def compare_methods(func: Callable, a: float, b: float, 
-                   exact_value: float = None) -> dict:
+                   exact_value: float = None, n: int = None) -> dict:
     """
     Compare different numerical integration methods on the same function.
     
@@ -62,6 +62,7 @@ def compare_methods(func: Callable, a: float, b: float,
         a: Lower bound
         b: Upper bound
         exact_value: Known exact value of the integral (optional)
+        n: Number of intervals for comparison (optional, defaults to 100 for trapezoidal)
     
     Returns:
         Dictionary with comparison results
@@ -72,10 +73,16 @@ def compare_methods(func: Callable, a: float, b: float,
     
     results = {}
     
-    # Test with different n values
-    n_trap = 100
-    n_simp13 = 100 if 100 % 2 == 0 else 102
-    n_simp38 = 99  # Divisible by 3
+    # Use provided n or set defaults
+    if n is None:
+        n_trap = 100
+        n_simp13 = 100 if 100 % 2 == 0 else 102
+        n_simp38 = 99  # Divisible by 3
+    else:
+        n_trap = n
+        n_simp13 = n
+        # For simpson_3/8, adjust n to be divisible by 3
+        n_simp38 = n + (3 - n % 3) % 3
     
     try:
         results['trapezoidal'] = trapezoidal_rule(func, a, b, n_trap)

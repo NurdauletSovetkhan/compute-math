@@ -272,6 +272,30 @@ def run_comparison():
     # Get bounds
     a, b = get_integration_bounds()
     
+    # Get number of intervals for comparison
+    print("\n" + "-"*80)
+    print("NUMBER OF INTERVALS")
+    print("-"*80)
+    print("Note: For fair comparison, enter n for Simpson's 1/3 Rule (must be even)")
+    print("      Simpson's 3/8 Rule will use closest valid divisor by 3")
+    
+    while True:
+        try:
+            n = int(input("Enter number of intervals (n ≥ 2 and even): "))
+            
+            if n < 2:
+                print("Error: n must be at least 2")
+                continue
+            
+            if n % 2 != 0:
+                print("Error: n must be even")
+                continue
+            
+            break
+            
+        except ValueError:
+            print("Error: Please enter a valid integer.")
+    
     # Try to compute exact value automatically
     print("\n" + "-"*80)
     print("EXACT VALUE CALCULATION")
@@ -292,7 +316,7 @@ def run_comparison():
     
     # Perform comparison
     try:
-        results = compare_methods(func, a, b, exact_value)
+        results = compare_methods(func, a, b, exact_value, n)
         
         # Display detailed results for each method
         print("\n" + "="*80)
@@ -362,8 +386,30 @@ def run_test_examples():
         print(f"\nTesting: {desc}")
         print(f"Exact value: {exact:.10f}")
         
+        # Get number of intervals
+        print("\n" + "-"*80)
+        print("NUMBER OF INTERVALS")
+        print("-"*80)
+        
+        while True:
+            try:
+                n = int(input("Enter number of intervals (n >= 2 and even): "))
+                
+                if n < 2:
+                    print("Error: n must be at least 2")
+                    continue
+                
+                if n % 2 != 0:
+                    print("Error: n must be even")
+                    continue
+                
+                break
+                
+            except ValueError:
+                print("Error: Please enter a valid integer.")
+        
         # Run comparison
-        results = compare_methods(func, a, b, exact)
+        results = compare_methods(func, a, b, exact, n)
         display_comparison(results)
         
     except ValueError:
