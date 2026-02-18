@@ -198,6 +198,13 @@ def display_method_info(method_name: str):
             'requirements': 'n must be divisible by 3, n ≥ 3',
             'error': 'O(h⁴) or O(1/n⁴)',
             'best_for': 'Smooth functions, cubic approximations'
+        },
+        'weddle': {
+            'name': "Weddle's Rule",
+            'formula': '∫[a,b] f(x)dx ≈ (3h/10) * [f₀ + 5f₁ + f₂ + 6f₃ + f₄ + 5f₅ + f₆]',
+            'requirements': 'n must be divisible by 6, n ≥ 6',
+            'error': 'O(h⁶) or O(1/n⁶)',
+            'best_for': 'High accuracy, smooth functions'
         }
     }
     
@@ -283,8 +290,9 @@ def display_menu():
     print("  1. Trapezoidal Rule")
     print("  2. Simpson's 1/3 Rule")
     print("  3. Simpson's 3/8 Rule")
-    print("  4. Compare All Methods")
-    print("  5. Test Examples")
-    print("  6. Method Information")
+    print("  4. Weddle's Rule")
+    print("  5. Compare All Methods")
+    print("  6. Test Examples")
+    print("  7. Method Information")
     print("  0. Exit")
     print("-"*80)

@@ -70,6 +70,7 @@ def compare_methods(func: Callable, a: float, b: float,
     from methods.trapezoidal import trapezoidal_rule
     from methods.simpson_one_third import simpson_one_third_rule
     from methods.simpson_three_eighth import simpson_three_eighth_rule
+    from methods.weddle import weddle_rule
     
     results = {}
     
@@ -78,11 +79,14 @@ def compare_methods(func: Callable, a: float, b: float,
         n_trap = 100
         n_simp13 = 100 if 100 % 2 == 0 else 102
         n_simp38 = 99  # Divisible by 3
+        n_weddle = 102  # Divisible by 6
     else:
         n_trap = n
         n_simp13 = n
         # For simpson_3/8, adjust n to be divisible by 3
         n_simp38 = n + (3 - n % 3) % 3
+        # For weddle, adjust n to be divisible by 6
+        n_weddle = n + (6 - n % 6) % 6
     
     try:
         results['trapezoidal'] = trapezoidal_rule(func, a, b, n_trap)
@@ -98,6 +102,11 @@ def compare_methods(func: Callable, a: float, b: float,
         results['simpson_3/8'] = simpson_three_eighth_rule(func, a, b, n_simp38)
     except Exception as e:
         results['simpson_3/8'] = {'error': str(e)}
+    
+    try:
+        results['weddle'] = weddle_rule(func, a, b, n_weddle)
+    except Exception as e:
+        results['weddle'] = {'error': str(e)}
     
     # Calculate errors if exact value is provided
     if exact_value is not None:

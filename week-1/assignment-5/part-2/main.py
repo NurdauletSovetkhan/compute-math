@@ -12,6 +12,7 @@ import sympy as sp
 from methods.trapezoidal import trapezoidal_rule
 from methods.simpson_one_third import simpson_one_third_rule
 from methods.simpson_three_eighth import simpson_three_eighth_rule
+from methods.weddle import weddle_rule
 from utils import (
     validate_integration_params,
     validate_function,
@@ -153,7 +154,7 @@ def get_number_of_intervals(method: str):
     Get number of intervals from user based on method requirements.
     
     Parameters:
-        method: 'trapezoidal', 'simpson_1/3', or 'simpson_3/8'
+        method: 'trapezoidal', 'simpson_1/3', 'simpson_3/8', or 'weddle'
     
     Returns:
         int: Number of intervals
@@ -174,6 +175,10 @@ def get_number_of_intervals(method: str):
         print("Requirements: n must be divisible by 3 and n ≥ 3")
         divisibility = 3
         min_n = 3
+    elif method == 'weddle':
+        print("Requirements: n must be divisible by 6 and n ≥ 6")
+        divisibility = 6
+        min_n = 6
     else:
         divisibility = None
         min_n = 1
@@ -238,6 +243,8 @@ def run_single_method(method_name: str):
             result = simpson_one_third_rule(func, a, b, n)
         elif method_name == 'simpson_3/8':
             result = simpson_three_eighth_rule(func, a, b, n)
+        elif method_name == 'weddle':
+            result = weddle_rule(func, a, b, n)
         else:
             print(f"Unknown method: {method_name}")
             return
@@ -426,7 +433,8 @@ def show_method_information():
     print("  1. Trapezoidal Rule")
     print("  2. Simpson's 1/3 Rule")
     print("  3. Simpson's 3/8 Rule")
-    print("  4. All Methods")
+    print("  4. Weddle's Rule")
+    print("  5. All Methods")
     print("  0. Back")
     print("="*80)
     
@@ -442,9 +450,12 @@ def show_method_information():
         elif choice == 3:
             display_method_info('simpson_3/8')
         elif choice == 4:
+            display_method_info('weddle')
+        elif choice == 5:
             display_method_info('trapezoidal')
             display_method_info('simpson_1/3')
             display_method_info('simpson_3/8')
+            display_method_info('weddle')
         else:
             print("Invalid choice.")
             
@@ -476,12 +487,15 @@ def main():
                 run_single_method('simpson_3/8')
             
             elif choice == '4':
-                run_comparison()
+                run_single_method('weddle')
             
             elif choice == '5':
-                run_test_examples()
+                run_comparison()
             
             elif choice == '6':
+                run_test_examples()
+            
+            elif choice == '7':
                 show_method_information()
             
             else:
