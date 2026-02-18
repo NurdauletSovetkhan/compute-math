@@ -89,18 +89,31 @@ def create_fixed_point_function(func, x0, alpha=0.1):
 def parse_function(func_str):
     """Parse user-input function string into Python lambda"""
     try:
+        # Remove any existing 'math.' prefix that user might have added
+        func_str = func_str.replace('math.', '')
+        
         # Replace common math notations (order matters!)
         func_str = func_str.replace('^', '**')
+        
+        # Handle math functions - add math. prefix
         func_str = func_str.replace('sqrt', 'math.sqrt')
         func_str = func_str.replace('sin', 'math.sin')
         func_str = func_str.replace('cos', 'math.cos')
         func_str = func_str.replace('tan', 'math.tan')
         func_str = func_str.replace('exp', 'math.exp')
+        func_str = func_str.replace('abs', 'math.abs')
         
         # Handle log functions: both ln and log mean natural logarithm
         func_str = func_str.replace('ln(', 'math.log(')
         if 'log(' in func_str and 'math.log(' not in func_str:
             func_str = func_str.replace('log(', 'math.log(')
+        
+        # Handle constants
+        # Be careful: replace 'e' only when it's not part of 'exp'
+        import re
+        # Replace standalone 'e' (not followed by 'x' which would make it 'exp')
+        func_str = re.sub(r'\be\b(?!x)', 'math.e', func_str)
+        func_str = func_str.replace('pi', 'math.pi')
         
         # Create lambda function
         func = eval(f"lambda x: {func_str}")
@@ -110,6 +123,50 @@ def parse_function(func_str):
         return func
     except Exception as e:
         print(f"Error parsing function: {e}")
+        print(f"Hint: Use 'exp(x)' for e^x, not 'e^x' or 'e*x'")
+        print(f"      Available: sin, cos, tan, exp, log, ln, sqrt, abs")
+        return None
+
+
+def parse_gx_function(gx_str):
+    """Parse user-input g(x) function string for fixed point iteration"""
+    try:
+        # Remove any existing 'math.' prefix that user might have added
+        gx_str = gx_str.replace('math.', '')
+        
+        # Replace common math notations (order matters!)
+        gx_str = gx_str.replace('^', '**')
+        
+        # Handle math functions - add math. prefix
+        gx_str = gx_str.replace('sqrt', 'math.sqrt')
+        gx_str = gx_str.replace('sin', 'math.sin')
+        gx_str = gx_str.replace('cos', 'math.cos')
+        gx_str = gx_str.replace('tan', 'math.tan')
+        gx_str = gx_str.replace('exp', 'math.exp')
+        gx_str = gx_str.replace('abs', 'math.abs')
+        
+        # Handle log functions: both ln and log mean natural logarithm
+        gx_str = gx_str.replace('ln(', 'math.log(')
+        if 'log(' in gx_str and 'math.log(' not in gx_str:
+            gx_str = gx_str.replace('log(', 'math.log(')
+        
+        # Handle constants
+        import re
+        gx_str = re.sub(r'\be\b(?!x)', 'math.e', gx_str)
+        gx_str = gx_str.replace('pi', 'math.pi')
+        
+        # Create lambda function
+        gx = eval(f"lambda x: {gx_str}")
+        
+        # Test the function
+        test_val = gx(1.0)
+        if not isinstance(test_val, (int, float)):
+            raise ValueError("Function must return a numeric value")
+        return gx
+    except Exception as e:
+        print(f"Error parsing g(x) function: {e}")
+        print(f"Hint: Use 'exp(x)' for e^x, not 'e^x' or 'e*x'")
+        print(f"      Available: sin, cos, tan, exp, log, ln, sqrt, abs")
         return None
 
 
@@ -331,8 +388,16 @@ def main():
             print("\nENTER CUSTOM FUNCTION:")
             print("Use 'x' as variable. Examples:")
             print("  x**3 - x - 2")
-            print("  math.log(x) + x - 2")
-            print("  math.cos(x) - x")
+            print("  log(x) + x - 2  or  ln(x) + x - 2")
+            print("  cos(x) - x")
+            print("  x*exp(x) - 1")
+            print("  x*exp(x-1) - 1")
+            print("\nAvailable functions: sin, cos, tan, exp, log, ln, sqrt, abs")
+            print("Constants: e, pi")
+            print("Powers: x**2 or x^2")
+            print("\nNote: For Fixed Point method, you'll be able to:")
+            print("  - Auto-generate g(x) from f(x), OR")
+            print("  - Enter g(x) directly (e.g., ln(3 + x) for x_{n+1} = ln(3 + x_n))")
             
             func_str = input("\nf(x) = ").strip()
             func = parse_function(func_str)
@@ -386,8 +451,30 @@ def main():
                 dfunc = numerical_derivative(func)
             
             if need_gx:
-                print("\nAutomatically creating g(x) for fixed-point iteration...")
-                gx = create_fixed_point_function(func, x0)
+                print("\nFIXED POINT ITERATION - g(x) INPUT OPTIONS:")
+                print("1. Automatically create g(x) from f(x) using formula: g(x) = x - alpha*f(x)")
+                print("2. Enter g(x) directly (e.g., for x_{n+1} = ln(3 + x_n), enter: ln(3 + x)")
+                
+                gx_choice = input("\nChoose option (1 or 2): ").strip()
+                
+                if gx_choice == '2':
+                    print("\nEnter g(x) function:")
+                    print("Examples:")
+                    print("  - ln(3 + x)  or  math.log(3 + x)")
+                    print("  - (x + 2)**(1/3)")
+                    print("  - 2 - ln(x)")
+                    print("  - cos(x)")
+                    gx_str = input("\ng(x) = ").strip()
+                    gx = parse_gx_function(gx_str)
+                    
+                    if gx is None:
+                        print("Invalid g(x) function! Using automatic creation instead.")
+                        gx = create_fixed_point_function(func, x0)
+                    else:
+                        print(f"✓ g(x) = {gx_str} successfully parsed")
+                else:
+                    print("\nAutomatically creating g(x) for fixed-point iteration...")
+                    gx = create_fixed_point_function(func, x0)
             
             # Get parameters
             tolerance, max_iter = get_parameters()

@@ -1,7 +1,7 @@
 import numpy as np
 
 # f = [1.0000, 1.2214, 1.4918, 1.8221, 2.2255]
-f = [2,4,7,11]
+f = [1,4,9,16,36]
 h = 1  # Шаг по x (x1 - x0)
 idx = 1
 
@@ -22,7 +22,8 @@ f_triple_prime = delta_3 / (h**3)
 # Формула: (f[i+1] - f[i-1]) / (2*h)
 if idx > 0 and idx < len(f) - 1:
     f_prime_central = (f[idx+1] - f[idx-1]) / (2 * h)
-    print(f"Центральная производная f'({idx+1}): {f_prime_central}")
+    f_double_prime_central = (f[idx+1] - 2*f[idx] + f[idx-1]) / (h**2)
+    f_triple_prime = (f[idx+2] - 2*f[idx+1] + 2*f[idx-1] - f[idx-2]) / (2 * (h**3))
 
 # --- ПРИМЕР ДЛЯ ЗАДАЧИ ---
 # print(f"Конечная разность Δ²f(1.1): {delta_2[idx]:.4f}")

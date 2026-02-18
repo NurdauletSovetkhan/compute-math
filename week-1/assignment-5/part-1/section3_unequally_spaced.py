@@ -38,7 +38,7 @@ def unequally_spaced_forward(x_values, f_values, point_index=0):
     coeff1 = (2 * x0 - x0 - x2) / ((x1 - x0) * (x1 - x2))
     coeff2 = (2 * x0 - x0 - x1) / ((x2 - x0) * (x2 - x1))
     
-    derivative = f0 * coeff0 + f1 * coeff1 + f2 * coeff2
+    derivative = f0 * coeff0 + f1 * coeff1 + f2 * coeff2 
     
     return derivative
 

@@ -23,7 +23,6 @@ def display_menu():
     print("\n1. Run All Sections (Complete Analysis)")
     print("2. Section 2: Equally Spaced Differentiation")
     print("3. Section 3: Unequally Spaced Differentiation")
-    print("4. Section 4: Extrema Analysis")
     print("5. Exit")
     print("\n" + "="*70)
 
@@ -120,7 +119,7 @@ def run_all_sections(x_values, f_values, is_equally_spaced):
         run_section3(x_values, f_values)
     
     # Always run extrema analysis
-    run_section4(x_values, f_values, h if is_equally_spaced else None, is_equally_spaced)
+    # run_section4(x_values, f_values, h if is_equally_spaced else None, is_equally_spaced)
 
 def main():
     """Main program loop"""
@@ -175,8 +174,8 @@ def main():
                 print("\n✓ Note: Data is equally spaced, but Section 3 methods will still work.")
             run_section3(x_values, f_values)
         
-        elif choice == '4':
-            run_section4(x_values, f_values, h if is_equally_spaced else None, is_equally_spaced)
+        # elif choice == '4':
+        #     run_section4(x_values, f_values, h if is_equally_spaced else None, is_equally_spaced)
         
         else:
             print("\n❌ Invalid choice. Please enter 1-5.")
